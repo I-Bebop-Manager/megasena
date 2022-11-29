@@ -1,0 +1,83 @@
+<div class="example-container">
+    <form class="example-container" #form="ngForm">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Numero de Dezenas por jogo" [(ngModel)]="jogoFilter.numeroDeDezenasPorJogo"
+                name="numeroDeDezenasPorJogo">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Numero de jogos" [(ngModel)]="jogoFilter.numeroDeJogos" name="numeroDeJogos">
+        </mat-form-field>
+
+        <div>
+            <label>Usa calculo percentual dos numeros: </label>
+            <mat-radio-group [(ngModel)]="jogoFilter.usaPorcentagens" name="usaPorcentagens">
+                <mat-radio-button [checked]="jogoFilter.usaPorcentagens == true" value=true>Sim</mat-radio-button>
+                <mat-radio-button value=false>Não</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <button mat-raised-button color="primary" (click)="carregaJogo()">carrega jogo</button>
+    </form>
+</div>
+<!-- <div>
+    <table mat-table [dataSource]="jogos.jogos" class="mat-elevation-z8" >
+        <ng-container matColumnDef="dezena">
+            <th mat-header-cell *matHeaderCellDef> Dezena </th>
+            <td mat-cell *matCellDef="let element"> {{element}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div> -->
+<div>
+    <table mat-table [dataSource]="informacoesDezenas" class="mat-elevation-z8">
+        <ng-container matColumnDef="dezena">
+            <th mat-header-cell *matHeaderCellDef> Dezena </th>
+            <td mat-cell *matCellDef="let element"> {{element.dezena}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="percentual">
+            <th mat-header-cell *matHeaderCellDef> Percentual </th>
+            <td mat-cell *matCellDef="let element"> {{element.percentual}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vezesSorteadas">
+            <th mat-header-cell *matHeaderCellDef> Nr. Vezes Sorteadas </th>
+            <td mat-cell *matCellDef="let element"> {{element.vezesSorteadas}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div>
+<!-- <div class="box-body">
+    <table class="table table-bordered">
+        <tr>
+            <th style="width: 10px">#</th>
+            <th>Dezena</th>
+            <th>Percentual</th>
+            <th>Numero de vezes sorteadas</th>            
+        </tr>
+        <tr *ngFor="let est of jogos.estatisticas.informacoesDezenas; let i = index">            
+            <td>{{est.dezena}}</td>
+            <td>{{est.percentual}}</td>
+            <td>{{est.vezesSorteadas}}</td>
+        </tr>
+    </table>
+</div> -->
+
+<!-- <div class="box-body">
+    <table class="table table-bordered">
+        <tr>
+            <th style="width: 10px">#</th>
+            <th>Dezenas</th>
+        </tr>
+        <tr *ngFor="let jogo of jogos.jogos; let i = index">
+            <td>-</td>
+            <td>{{jogo}}</td>
+        </tr>
+    </table>
+</div> -->
