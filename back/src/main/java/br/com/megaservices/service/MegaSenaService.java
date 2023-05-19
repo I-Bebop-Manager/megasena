@@ -126,7 +126,8 @@ public class MegaSenaService {
 		estatisticas.setTotalDeDezenasSorteadas(totalDeDezenasSorteadas);
 		estatisticas.setListaDeJogosJaSorteados(listaDeJogosJaSorteados);
 		estatisticas.setPerc(perc);
-		estatisticas.setRangeJogos("Range de jogos: Concurso "+parametros.getRangeAmostras()+" ao concurso "+linhas.size());		
+		int inicio = parametros.getRangeAmostras() == linhas.size() ? 1 : parametros.getRangeAmostras();
+		estatisticas.setRangeJogos("Range de jogos: Concurso "+inicio+" ao concurso "+linhas.size());		
 		return estatisticas;
 	}	
 
