@@ -94,22 +94,23 @@ public class JogosController {
 			
 			if(key+1 <= sorteios.size()) {
 				List<String> penultimos = Arrays.asList(sorteios.get(key+1).split("-"));
+				StringBuilder sb = new StringBuilder();
 				for(String s : penultimos) {
 					if(sorteios.get(key).contains(s)) {
-						System.out.println("Sorteio n (BASE) " + key + " || jogo: " + sorteios.get(key));
-						System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+1));						
-						System.out.println("Numero " + s + " do jogo anterior saiu denovo");
+						sb.append(s+ " ");
+					
 						//System.out.println("");
 					} else {
-						continue;
-						//System.out.println("Sorteio n " + key + " || jogo: " + sorteios.get(key));
-						//System.out.println("Sorteio n (POSTERIOR)" + key + 1 + " || jogo: " + sorteios.get(key+1));
-						//System.out.println("Numero do jogo anterior NÃO saiu denovo");
-						//System.out.println("");						
-					}
-					System.out.println("---------------------------------------");
-				}	
-			}			
+						continue;						
+					}					
+				}
+				if(!sb.isEmpty()) {
+					System.out.println("Sorteio n (BASE) " + key + " || jogo: " + sorteios.get(key));
+					System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+1));						
+					System.out.println("Numeros " + sb.toString() + " do jogo anterior saiu denovo");
+				}
+			}
+			System.out.println("---------------------------------------");
 		}
 	}
 }
