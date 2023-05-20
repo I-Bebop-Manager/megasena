@@ -1,9 +1,13 @@
 package br.com.megaservices.controllers;
 
+import static br.com.megaservices.utils.MegaSenaUtils.ordenaJogo;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,12 +54,14 @@ public class JogosController {
 			Jogos jogos = new Jogos();
 			jogos.setEstatisticas(estatisticas);
 			jogos.setNaoQuero(parametros.getNaoQuero());
-
+			
+			verificaAnterior(estatisticas);
+							
 			for (int z = 1; z <= parametros.getNumeroDeJogos(); z++) {
 				jogosFinais.add(service.run(jogos, parametros));
 			}
 			
-			jogos.setJogos(MegaSenaUtils.exibeJogoFormatado(jogosFinais));			
+			jogos.setJogos(MegaSenaUtils.exibeJogoFormatado(jogosFinais));
 			
 			response.setData(jogos);
 		} catch (IOException e) {			
@@ -63,5 +69,47 @@ public class JogosController {
 		}
 		
 		return ResponseEntity.ok(response);
+	}
+	
+	public void verificaAnterior(Estatisticas estatisticas) {
+		List<String> jogosVerifAnteriores = new ArrayList<>();
+				
+		for(String jogo : estatisticas.getListaDeJogosJaSorteados()) {
+			String jogoFormatado = ordenaJogo(jogo);				
+			jogosVerifAnteriores.add(jogoFormatado);
+		}
+		
+		jogosVerifAnteriores = MegaSenaUtils.exibeJogoFormatado(jogosVerifAnteriores);
+		
+		Map<Integer, String> sorteios = new HashMap<Integer, String>();
+		for(int i = jogosVerifAnteriores.size(); i > 0; i--) {
+			//System.out.println("jogos: " + jogosVerifAnteriores.get(i-1));
+			sorteios.put(i, jogosVerifAnteriores.get(i-1));
+		}
+		
+		for(Integer key : sorteios.keySet()) {
+			//System.out.println("Sorteio n: " + key);
+			//System.out.println("Jogo: " + sorteios.get(key));
+			//System.out.println("MAPSIZE: " + sorteios.size());
+			
+			if(key+1 <= sorteios.size()) {
+				List<String> penultimos = Arrays.asList(sorteios.get(key+1).split("-"));
+				for(String s : penultimos) {
+					if(sorteios.get(key).contains(s)) {
+						System.out.println("Sorteio n (BASE) " + key + " || jogo: " + sorteios.get(key));
+						System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+1));						
+						System.out.println("Numero " + s + " do jogo anterior saiu denovo");
+						//System.out.println("");
+					} else {
+						continue;
+						//System.out.println("Sorteio n " + key + " || jogo: " + sorteios.get(key));
+						//System.out.println("Sorteio n (POSTERIOR)" + key + 1 + " || jogo: " + sorteios.get(key+1));
+						//System.out.println("Numero do jogo anterior NÃO saiu denovo");
+						//System.out.println("");						
+					}
+					System.out.println("---------------------------------------");
+				}	
+			}			
+		}
 	}
 }
