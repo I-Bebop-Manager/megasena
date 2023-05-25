@@ -73,6 +73,7 @@ public class JogosController {
 	
 	public void verificaAnterior(Estatisticas estatisticas) {
 		List<String> jogosVerifAnteriores = new ArrayList<>();
+		int valProximoJogo = 1;
 				
 		for(String jogo : estatisticas.getListaDeJogosJaSorteados()) {
 			String jogoFormatado = ordenaJogo(jogo);				
@@ -92,8 +93,8 @@ public class JogosController {
 			//System.out.println("Jogo: " + sorteios.get(key));
 			//System.out.println("MAPSIZE: " + sorteios.size());
 			
-			if(key+1 <= sorteios.size()) {
-				List<String> penultimos = Arrays.asList(sorteios.get(key+1).split("-"));
+			if(key+valProximoJogo <= sorteios.size()) {
+				List<String> penultimos = Arrays.asList(sorteios.get(key+valProximoJogo).split("-"));
 				StringBuilder sb = new StringBuilder();
 				for(String s : penultimos) {
 					if(sorteios.get(key).contains(s)) {
@@ -106,7 +107,7 @@ public class JogosController {
 				}
 				if(!sb.isEmpty()) {
 					System.out.println("Sorteio n (BASE) " + key + " || jogo: " + sorteios.get(key));
-					System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+1));						
+					System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+valProximoJogo));						
 					System.out.println("Numeros " + sb.toString() + " do jogo anterior saiu denovo");
 				}
 			}
