@@ -91,8 +91,7 @@ public class JogosController {
 			sorteios.put(i, jogosVerifAnteriores.get(i-1));
 		}
 		
-		for(Integer key : sorteios.keySet()) {
-			
+		for(Integer key : sorteios.keySet()) {			
 			if(key>=3) {
 				List<String> ultimoJogo = Arrays.asList(sorteios.get(key).split("-"));
 				List<String> penultimoJogo = Arrays.asList(sorteios.get(key-1).split("-"));
@@ -103,16 +102,24 @@ public class JogosController {
 				System.out.println(" *******************************");
 				System.out.println("* JOGO "+key+" : "+sorteios.get(key) +" *");
 				System.out.println(" *******************************");
-				System.out.println("--- PENULTIMO JOGO: "+sorteios.get(key-1));
-				System.out.println("--- ANTEPENULTIMO JOGO: "+sorteios.get(key-2));
+				System.out.println("--- JOGO Numero "+(key-1)+": "+sorteios.get(key-1));
+				System.out.println("--- JOGO Numero "+(key-2)+": "+sorteios.get(key-2));
+				boolean naoSaiu = true;
 				for(String s : ultimoJogo) {					
 					if(penultimoJogo.contains(s)) {						
 						System.out.println("Numero "+s+" saiu no penultimo jogo.");
+						naoSaiu = false;
 					}
 					if(antepenultimoJogo.contains(s)) {						
 						System.out.println("Numero "+s+" saiu no antepenultimo jogo.");
-					}
-				}				
+						naoSaiu = false;
+					}					
+				}
+				if(naoSaiu) {
+					System.out.println("####################################################################");
+					System.out.println("###  JOGO "+key+" NÃO TEVE NUMERO REPETIDO NOS JOGOS ANTERIORES ### ");
+					System.out.println("####################################################################");
+				}
 			}
 			System.out.println("---------------------------------------");
 		}
