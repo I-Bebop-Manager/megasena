@@ -55,7 +55,7 @@ public class JogosController {
 			jogos.setEstatisticas(estatisticas);
 			jogos.setNaoQuero(parametros.getNaoQuero());
 			
-			verificaAnterior(estatisticas);
+			novoVerificaJogoAnterior(estatisticas);
 							
 			for (int z = 1; z <= parametros.getNumeroDeJogos(); z++) {
 				jogosFinais.add(service.run(jogos, parametros));
@@ -71,7 +71,10 @@ public class JogosController {
 		return ResponseEntity.ok(response);
 	}
 	
-	public void verificaAnterior(Estatisticas estatisticas) {
+	/**
+	 * @param estatisticas
+	 */
+	public void novoVerificaJogoAnterior(Estatisticas estatisticas) {
 		List<String> jogosVerifAnteriores = new ArrayList<>();
 		int valProximoJogo = 1;
 				
@@ -89,27 +92,27 @@ public class JogosController {
 		}
 		
 		for(Integer key : sorteios.keySet()) {
-			//System.out.println("Sorteio n: " + key);
-			//System.out.println("Jogo: " + sorteios.get(key));
-			//System.out.println("MAPSIZE: " + sorteios.size());
 			
-			if(key+valProximoJogo <= sorteios.size()) {
-				List<String> penultimos = Arrays.asList(sorteios.get(key+valProximoJogo).split("-"));
-				StringBuilder sb = new StringBuilder();
-				for(String s : penultimos) {
-					if(sorteios.get(key).contains(s)) {
-						sb.append(s+ " ");
-					
-						//System.out.println("");
-					} else {
-						continue;						
-					}					
-				}
-				if(!sb.isEmpty()) {
-					System.out.println("Sorteio n (BASE) " + key + " || jogo: " + sorteios.get(key));
-					System.out.println("Sorteio n (POSTERIOR) " + (key + 1) + " || jogo: " + sorteios.get(key+valProximoJogo));						
-					System.out.println("Numeros " + sb.toString() + " do jogo anterior saiu denovo");
-				}
+			if(key>=3) {
+				List<String> ultimoJogo = Arrays.asList(sorteios.get(key).split("-"));
+				List<String> penultimoJogo = Arrays.asList(sorteios.get(key-1).split("-"));
+				List<String> antepenultimoJogo = Arrays.asList(sorteios.get(key-2).split("-"));
+				
+				StringBuilder sb = new StringBuilder();			
+				
+				System.out.println(" *******************************");
+				System.out.println("* JOGO "+key+" : "+sorteios.get(key) +" *");
+				System.out.println(" *******************************");
+				System.out.println("--- PENULTIMO JOGO: "+sorteios.get(key-1));
+				System.out.println("--- ANTEPENULTIMO JOGO: "+sorteios.get(key-2));
+				for(String s : ultimoJogo) {					
+					if(penultimoJogo.contains(s)) {						
+						System.out.println("Numero "+s+" saiu no penultimo jogo.");
+					}
+					if(antepenultimoJogo.contains(s)) {						
+						System.out.println("Numero "+s+" saiu no antepenultimo jogo.");
+					}
+				}				
 			}
 			System.out.println("---------------------------------------");
 		}
