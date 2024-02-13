@@ -113,11 +113,21 @@ public class MegaSenaService {
 		
 		List<Estatistica> lista = new ArrayList<Estatistica>();
 		Estatistica e;
+		String percentual;
 		for (i = 0; i < 60; i++) {
-			e = new Estatistica();
+			e = new Estatistica();			
 			perc[i] = quantidade[i] * 100 / totalDeDezenasSorteadas;
 			e.setDezena(StringUtils.leftPad(String.valueOf((i + 1)), 2, "0"));
-			e.setPercentual(perc[i] != 0.0 ? perc[i].toString().substring(0,4) : "0.0");
+			//e.setPercentual(perc[i] != 0.0 ? perc[i].toString().substring(0,4) : );
+			if(perc[i] != 0.0) {
+				percentual = perc[i].toString();
+				if(percentual.length() <= 3) {
+					percentual = StringUtils.rightPad(percentual, 4, "0");
+				}
+				e.setPercentual(percentual.substring(0,4));
+			} else {
+				e.setPercentual("0.0");
+			}
 			e.setVezesSorteadas(String.valueOf(quantidade[i]));
 			lista.add(e);
 		}

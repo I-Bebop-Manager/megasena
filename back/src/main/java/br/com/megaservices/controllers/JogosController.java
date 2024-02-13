@@ -76,7 +76,7 @@ public class JogosController {
 	 */
 	public void novoVerificaJogoAnterior(Estatisticas estatisticas) {
 		List<String> jogosVerifAnteriores = new ArrayList<>();
-		int valProximoJogo = 1;
+		
 				
 		for(String jogo : estatisticas.getListaDeJogosJaSorteados()) {
 			String jogoFormatado = ordenaJogo(jogo);				
